@@ -1,7 +1,7 @@
 .autocomplete {
   position: relative;
   display: inline-block;
-  width: 100%;
+  width: 450px;
 }
 
 .autocomplete input {
@@ -11,4 +11,35 @@
   border: 1px solid #ccc;
   border-radius: 0.25em;
   outline: none;
+}
+
+.autocomplete input:focus {
+  border-color: #646cff;
+}
+
+.autocomplete-suggestion {
+  display: flex;
+  flex-direction: column;
+  background-color: transparent;
+}
+
+.autocomplete-suggestion-list {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  border: 1px solid #ccc;
+  border-top: none;
+  overflow-y: scroll;
+  height: 300px;
+  background-color: transparent;
+}
+
+.autocomplete-suggestion-item {
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+.autocomplete-suggestion-item:hover {
+  background-color: #5d5e68;
+  color: white;
 }
