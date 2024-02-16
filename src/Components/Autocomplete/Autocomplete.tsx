@@ -55,6 +55,10 @@ export const Autocomplete: React.FC = () => {
     setText(e.target.value);
   };
 
+  const handleClick = (post: Post) => {
+    setText(post.title);
+  };
+
   return (
     <div className='autocomplete'>
       <input
@@ -66,11 +70,30 @@ export const Autocomplete: React.FC = () => {
       <div className='autocomplete-suggestion'>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
-        {suggestions.length > 0 && !loading && text && (
+        {suggestions.length > 0 && !loading && (
           <ul className='autocomplete-suggestion-list'>
             {suggestions.map((post) => (
-              <li key={post.id} className='autocomplete-suggestion-item'>
-                <h3>{post.title}</h3>
+              <li
+                key={post.id}
+                className='autocomplete-suggestion-item'
+                onClick={() => handleClick(post)}
+              >
+                {/* Highlight matching part of text */}
+                {post.title.toLowerCase().includes(text.toLowerCase()) ? (
+                  <>
+                    {post.title.substring(
+                      0,
+                      post.title.toLowerCase().indexOf(text.toLowerCase())
+                    )}
+                    <strong>{text}</strong>
+                    {post.title.substring(
+                      post.title.toLowerCase().indexOf(text.toLowerCase()) +
+                        text.length
+                    )}
+                  </>
+                ) : (
+                  post.title
+                )}
               </li>
             ))}
           </ul>
