@@ -66,17 +66,26 @@ export const Autocomplete: React.FC = () => {
         value={text}
         onChange={handleChange}
         placeholder='Type name of a post...'
+        aria-owns='autocomplete-suggestion-list'
+        aria-haspopup='listbox'
       />
       <div className='autocomplete-suggestion'>
         {loading && <p>Loading...</p>}
         {error && <p>{error}</p>}
         {suggestions.length > 0 && !loading && (
-          <ul className='autocomplete-suggestion-list'>
+          <ul
+            className='autocomplete-suggestion-list'
+            id='autocomplete-suggestion-list'
+            role='listbox'
+            aria-label='Suggestions'
+          >
             {suggestions.map((post) => (
               <li
                 key={post.id}
                 className='autocomplete-suggestion-item'
                 onClick={() => handleClick(post)}
+                role='option'
+                aria-selected={text === post.title}
               >
                 {/* Highlight matching part of text */}
                 {post.title.toLowerCase().includes(text.toLowerCase()) ? (
