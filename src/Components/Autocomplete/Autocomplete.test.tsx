@@ -36,3 +36,21 @@ test('displays "No results" when no suggestions found', async () => {
 
   await waitFor(() => expect(getByText('No results')).toBeInTheDocument());
 });
+
+test('displays suggestions when fetched successfully', async () => {
+  jest.spyOn(global, 'fetch').mockResolvedValueOnce(
+    Promise.resolve({
+      ok: true,
+      json: async () => [
+        { id: 1, title: 'Post 1' },
+        { id: 2, title: 'Post 2' },
+      ],
+    } as Response)
+  );
+
+  const { getByPlaceholderText, getAllByText } = render(<Autocomplete />);
+  const input = getByPlaceholderText('Type name of a post...');
+  userEvent.type(input, 'Post');
+
+  await waitFor(() => expect(getAllByText('Post').length).toBe(2));
+});
